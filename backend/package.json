@@ -10,8 +10,8 @@
   "author": "deteCT team",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1"
+    "@hapi/hapi": "^20.2.2",
+    "dotenv": "^16.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
