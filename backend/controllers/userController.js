@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const conn = require('../db')
+const conn = require('../db').promise()
 
 const getUser = async (req,res,next) => {
     try {
@@ -7,7 +7,7 @@ const getUser = async (req,res,next) => {
             return res.status(422).json({ message: "Please provide the token" })
         }
 
-        const loginToken = req.headers.split(' ')[1]
+        const loginToken = req.headers.authorization.split(' ')[1]
         const decoded = jwt.verify(loginToken, 'detect-token')
 
         const [row] = await conn.execute(

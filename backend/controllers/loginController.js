@@ -1,6 +1,6 @@
-const { validationResult } = require('express-validator')
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+const { validationResult } = require('express-validator')
 const conn = require('../db').promise()
 
 const login = async (req, res, next) => {
@@ -12,7 +12,7 @@ const login = async (req, res, next) => {
 
     try {
         const [row] = await conn.execute(
-            "SELECT `email` FROM `users` WHERE `email`=?",
+            "SELECT * FROM `users` WHERE `email`=?",
             [req.body.email]
         )
 
