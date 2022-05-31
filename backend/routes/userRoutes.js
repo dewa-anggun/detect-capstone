@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { body } = require('express-validator')
-const { register, login, getUser } = require('./controllers/userController')
+const { register, login, getUser } = require('../controllers/userController')
 
 router.post('/register', [
     body('email', "Invalid email address")
@@ -32,5 +32,7 @@ router.post('/login', [
 ], login)
 
 router.get('/getUser', getUser)
+
+
 
 module.exports = router
