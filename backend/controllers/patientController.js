@@ -3,6 +3,22 @@ const { validationResult } = require('express-validator')
 const conn = require('../db').promise()
 // const { getUser } = require('./userController')
 
+const getAllPatients = async (req, res) => {
+    try {
+        const [rows] = await conn.execute(
+            "SELECT * FROM patients",
+        )
+
+        if (rows.length > 0){
+            rows.forEach(element => {
+                console.log(element)
+                res.json({ test:"wleeeh" })
+            })
+        }
+    } catch(err){
+    }
+}
+
 const addPatient = async (req,res,next) => {
     const errors = validationResult(req)
 
@@ -28,4 +44,4 @@ const addPatient = async (req,res,next) => {
     }
 }
 
-module.exports = { addPatient }
+module.exports = { addPatient, getAllPatients }
