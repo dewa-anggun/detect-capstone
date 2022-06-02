@@ -79,7 +79,7 @@ const getUser = async (req,res,next) => {
         )
 
         if (row.length > 0) {
-            return res.json({ user:row[0] })
+            return res.json({ user:row[0].id })
         }
 
         res.json({ message: "No user found" })
