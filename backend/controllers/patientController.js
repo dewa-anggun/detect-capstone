@@ -7,23 +7,22 @@ const conn = require('../db').promise()
 const getAllPatients = async (req, res) => {
     const errors = validationResult(req)
     let userId = req.headers.authorization
+    
+    if (!userId || !userId.startsWith('Bearer') || !userId.split(' ')[1]) {
+        return res.status(422).json({ message: "Please provide the token" })
+    }
 
+    const loginToken = userId.split(' ')[1]
+    const decoded = jwt.verify(loginToken, 'detect-token')
+
+    let [row] = await conn.execute(
+        "SELECT `id`, `email`, `name` FROM `users` WHERE `id`=?", [decoded.id]
+    )
+
+    if (row.length > 0) {
+        userId = row[0].id
+    }
     try {
-        if (!userId || !userId.startsWith('Bearer') || !userId.split(' ')[1]) {
-            return res.status(422).json({ message: "Please provide the token" })
-        }
-
-        const loginToken = userId.split(' ')[1]
-        const decoded = jwt.verify(loginToken, 'detect-token')
-
-        const [row] = await conn.execute(
-            "SELECT `id`, `email`, `name` FROM `users` WHERE `id`=?", [decoded.id]
-        )
-
-        if (row.length > 0) {
-            userId = row[0].id
-        }
-
         const [rows] = await conn.execute(
             "SELECT * FROM patients WHERE `user_id`=?", [userId]
         )
