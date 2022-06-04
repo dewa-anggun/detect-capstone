@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 // const { getUserId } = require('../middleware/authMiddleware')
 const conn = require('../db').promise()
-// const { getUser } = require('./userController')q
+// const { getUser } = require('./userController')
 
 const getAllPatients = async (req, res) => {
     const errors = validationResult(req)
     let userId = req.headers.authorization
-    
+
     if (!userId || !userId.startsWith('Bearer') || !userId.split(' ')[1]) {
         return res.status(422).json({ message: "Please provide the token" })
     }
@@ -28,10 +28,7 @@ const getAllPatients = async (req, res) => {
         )
 
         if (rows.length > 0){
-            rows.forEach(element => {
-                console.log(element)
-                res.json({ test:"wleeeh" })
-            })
+            res.json({ patients:rows })
         }
     } catch(err){
         console.log(err)
