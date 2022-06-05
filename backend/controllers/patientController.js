@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
-// const { getUserId } = require('../middleware/authMiddleware')
 const conn = require('../db').promise()
-// const { getUser } = require('./userController')
 
 const getAllPatients = async (req, res) => {
     const errors = validationResult(req)
@@ -71,7 +69,6 @@ const addPatient = async (req,res, next) => {
 
         if (rows.affectedRows === 1) {
             return res.status(201).json({ message: userId })
-
         }
     } catch(err) {
         next(err)
