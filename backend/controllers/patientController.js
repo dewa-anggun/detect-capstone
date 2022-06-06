@@ -34,6 +34,7 @@ const getAllPatients = async (req, res) => {
 }
 
 const addPatient = async (req,res, next) => {
+    const added = new Date().toISOString()
     const errors = validationResult(req)
     let userId = req.headers.authorization
 
@@ -57,18 +58,17 @@ const addPatient = async (req,res, next) => {
             userId = row[0].id
         }
 
-        // const userId = await getUser(req.headers)
-        const [rows] = await conn.execute('INSERT INTO `patients` (`name`, `nik`, `age`, `gender`, `user_id`) VALUES (?, ?, ?, ?, ?)', [
+        const [rows] = await conn.execute('INSERT INTO `patients` (`name`, `nik`, `age`, `gender`, `date_added`, `user_id`) VALUES (?, ?, ?, ?, ?, ?)', [
             req.body.name,
             req.body.nik,
             req.body.age,
             req.body.gender,
-            // "1"
+            added,
             userId
         ])
 
         if (rows.affectedRows === 1) {
-            return res.status(201).json({ message: userId })
+            return res.status(201).json({ message: "Patient added successfully" })
         }
     } catch(err) {
         next(err)

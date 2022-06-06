@@ -6,10 +6,6 @@ const cors = require('cors')
 dotenv.config()
 const App = express()
 
-let corsOption = {
-    origin: "http://localhost:5000"
-}
-App.use(cors(corsOption))
 App.use(express.json())
 App.use('/user', userRoutes)
 App.use('/patient', patientRoutes)
