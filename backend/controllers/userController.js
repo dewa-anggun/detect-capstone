@@ -57,7 +57,7 @@ const login = async (req, res, next) => {
             return res.status(422).json({ message: "Incorrect password" })
         }
 
-        const loginToken = jwt.sign({ id:row[0].id }, 'detect-token', { expiresIn:'1d' })
+        const loginToken = jwt.sign({ id:row[0].id }, process.env.JWT_TOKEN, { expiresIn:'1d' })
 
         return res.json({ token:loginToken })
     } catch(err) {
@@ -72,7 +72,7 @@ const getUser = async (req,res,next) => {
         }
 
         const loginToken = req.headers.authorization.split(' ')[1]
-        const decoded = jwt.verify(loginToken, 'detect-token')
+        const decoded = jwt.verify(loginToken, process.env.JWT_TOKEN)
 
         const [row] = await conn.execute(
             "SELECT `id`, `email`, `name` FROM `users` WHERE `id`=?", [decoded.id]

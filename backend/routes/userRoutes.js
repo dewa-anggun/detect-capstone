@@ -32,6 +32,9 @@ router.post('/login', [
 ], login)
 
 router.get('/getUser', getUser)
+router.get('/', (req, res) => {
+    res.send({ message: "test" })
+})
 
 
 

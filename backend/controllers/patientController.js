@@ -11,7 +11,7 @@ const getAllPatients = async (req, res) => {
     }
 
     const loginToken = userId.split(' ')[1]
-    const decoded = jwt.verify(loginToken, 'detect-token')
+    const decoded = jwt.verify(loginToken, process.env.JWT_TOKEN)
 
     let [row] = await conn.execute(
         "SELECT `id`, `email`, `name` FROM `users` WHERE `id`=?", [decoded.id]
@@ -48,7 +48,7 @@ const addPatient = async (req,res, next) => {
         }
 
         const loginToken = userId.split(' ')[1]
-        const decoded = jwt.verify(loginToken, 'detect-token')
+        const decoded = jwt.verify(loginToken, process.env.JWT_TOKEN)
 
         const [row] = await conn.execute(
             "SELECT `id`, `email`, `name` FROM `users` WHERE `id`=?", [decoded.id]
