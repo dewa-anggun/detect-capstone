@@ -100,11 +100,12 @@ const addPatient = async (req,res, next) => {
             userId = row[0].id
         }
 
-        const [rows] = await conn.execute('INSERT INTO `patients` (`name`, `nik`, `age`, `gender`, `date_added`, `user_id`) VALUES (?, ?, ?, ?, ?, ?)', [
+        const [rows] = await conn.execute('INSERT INTO `patients` (`name`, `nik`, `age`, `gender`, `address`, `date_added`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?)', [
             req.body.name,
             req.body.nik,
             req.body.age,
             req.body.gender,
+            req.body.address,
             added,
             userId
         ])
