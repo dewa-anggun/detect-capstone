@@ -12,22 +12,22 @@ const storage = Multer.diskStorage({
     }
 })
 
-function checkFileTypes(file, cb) {
-    const fileTypes = /jpg|jpeg|png/
-    const fileExt = fileTypes.test(path.extname(file.originalname).toLowerCase())
-    const mimeType = fileTypes.test(file.mimeType)
+// function checkFileType(file, cb) {
+//     const filetypes = /jpg|jpeg|png/
+//     const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
+//     const mimetype = filetypes.test(file.mimeType)
 
-    if (fileExt && mimeType) {
-        return cb(null, true)
-    } else {
-        cb("Image only")
-    }
-}
+//     if (extname && mimetype) {
+//         return cb(null, true)
+//     } else {
+//         cb("Image only")
+//     }
+// }
 
 const upload = Multer({
     storage,
     // fileFilter: function (req, file, cb) {
-    //     checkFileTypes(file, cb)
+    //     checkFileType(file, cb)
     // }
 })
 
@@ -46,7 +46,6 @@ router.post('/', upload.single("file"), async (req, res) => {
                 // return res.status(201).json({ message: "Patient added successfully" })
             }
         }
-        // console.log(ct_image)
         res.send(`/${req.file.path.replace('\\', '/')}`)
     } catch (err) {
         console.log(err)
