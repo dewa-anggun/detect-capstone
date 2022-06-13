@@ -46,7 +46,7 @@ router.post('/', upload.single("file"), async (req, res) => {
                 // return res.status(201).json({ message: "Patient added successfully" })
             }
         }
-        res.send(`/${req.file.path.replace('\\', '/')}`)
+        res.json({ ct_image: `/${req.file.path.replace('\\', '/')}` })
     } catch (err) {
         console.log(err)
     }
